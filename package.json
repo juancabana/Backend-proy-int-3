@@ -12,7 +12,8 @@
   "author": "Juan David Cabana Trejos <juand.cabanat@unac.edu.co>",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
