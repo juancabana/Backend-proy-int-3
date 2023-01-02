@@ -1,22 +1,23 @@
 import mysql from 'mysql';
 
-const conection = mysql.createConnection({
+const pool = mysql.createPool({
   host: 'localhost',
   user: 'root',
   port: 3306,
+  database: 'cosco',
   password: 'Password123#@!',
 
 });
 
-conection.connect();
+// conection.connect();
 
-conection.query('SELECT * FROM cosco.Post;', (err, rows, fields) => {
+pool.query('SELECT * FROM cosco.User;', (err, rows, fields) => {
   if (err) throw err;
   console.log(rows);
 })
 
 
-conection.end
+// conection.end();
 
 
-export default conection;
+export default pool;

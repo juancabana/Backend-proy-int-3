@@ -1,6 +1,6 @@
 import express from 'express';
 import router from './routes/index.router.js';
-import conection from './libs/mysql.pool.js';
+import pool from './libs/mysql.pool.js';
 
 
 
