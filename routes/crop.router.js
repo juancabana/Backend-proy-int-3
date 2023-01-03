@@ -1,31 +1,45 @@
 import expres from 'express';
+import CropService from './../services/crop.service.js';
 
 const router = expres.Router();
+const service = new CropService();
 
-
+// GET
+// Obtener lista de cosechas
+router.get('/', async (req, res, next) => {
+  const crops = await service.find();
+  res.json({ ...crops });
+});
 
 // POST
 // Crear nueva cosecha
-
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   const body = req.body;
-
+  const newCrop = await service.create(body);
   res.json({
-    title: body.title,
-    ton: body.ton,
-  })
-})
-
+    newCrop,
+  });
+});
 
 // DELETE
 // Eliminar cosecha
-router.delete('/:id', (req, res) => {
-  const {id} = req.params;
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  const rta = await service.delete(id);
   res.json({
-    message: `Se eliminó la cosecha con el id: ${id}`
-  })
+    rta,
+  });
 });
+// UPDATE
+// Actualizar cosecha
+router.put('/:id', async (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  const rta = await service.update(id, body);
 
-
+  res.json({
+    rta,
+  });
+});
 
 export default router;

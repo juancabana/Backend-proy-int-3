@@ -1,53 +1,53 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 
-export const USER_TABLE = 'User';
+export const CROP_TABLE = 'Crop';
 
-export const UserSchema = {
-  id_user: {
+export const CropSchema = {
+  id_crop: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  first_name_user: {
+  title_crop: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  last_name_user: {
-    defaultValue: null,
-    type: DataTypes.STRING,
-  },
-  email_user: {
-    allowNull: false,
-    unique: true,
-    type: DataTypes.STRING,
-  },
-  password_user: {
+  description_crop: {
     allowNull: false,
     type: DataTypes.STRING,
   },
-  image_user: {
+  city_crop: {
+    allowNull: false,
     type: DataTypes.STRING,
-    defaultValue: null,
   },
-  phone_number: {
+  departament_crop: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  image_crop: {
+    defaultValue: 'image',
+    type: DataTypes.STRING,
+  },
+  address_crop: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
+  price_crop: {
     allowNull: false,
     type: DataTypes.INTEGER,
   },
 };
 
-export class User extends Model {
-  static associate () {
-
-  }
+export class Crop extends Model {
+  static associate() {}
 
   static config(sequelize) {
     return {
       sequelize,
-      tableName: USER_TABLE,
-      modelName: 'User',
+      tableName: CROP_TABLE,
+      modelName: 'Crop',
       timestamps: false
-    }
+    };
   }
 }
-

@@ -13,28 +13,30 @@ router.get('/', async (req, res, next) => {
 
 // Obtener un usuario por id
 router.get('/:id', async (req, res, next) => {
-  const {id} = req.params;
+  const { id } = req.params;
   const user = await service.findOne(id);
   res.json({
     data: user.dataValues,
-    ...user });
+    ...user,
+  });
 });
 
 // POST
+// Crear nuevo usuario
 router.post('/', async (req, res) => {
   const body = req.body;
   const newUser = await service.create(body);
   res.json({
-    newUser
-  })
+    newUser,
+  });
 });
 
 // DELETE
 router.delete('/:id', async (req, res) => {
-  const {id} = req.params;
+  const { id } = req.params;
   const rta = await service.delete(id);
   res.json({
-    rta
-  })
-})
+    rta,
+  });
+});
 export default router;

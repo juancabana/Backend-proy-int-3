@@ -21,7 +21,7 @@ class UserService {
   }
   async delete(id) {
     const user = await sequelize.models.User.findByPk(id);
-    user.destroy();
+    await user.destroy();
     return {message: 'EL usuario se ha eliminado correctamente'}
 
   }
