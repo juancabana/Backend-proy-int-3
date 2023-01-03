@@ -18,7 +18,7 @@ router.get('/', async (req, res, next) => {
 
 // Obtener un usuario por id
 router.get('/:id', async (req, res, next) => {
-  const id = req.params['id'];
+  const {id} = req.params;
   const user = await service.findOne(id);
   res.json({
     data: user.dataValues,
@@ -34,4 +34,12 @@ router.post('/', async (req, res) => {
   })
 });
 
+// DELETE
+router.delete('/:id', async (req, res) => {
+  const {id} = req.params;
+  const rta = await service.delete(id);
+  res.json({
+    rta
+  })
+})
 export default router;

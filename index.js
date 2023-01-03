@@ -1,8 +1,5 @@
 import express from 'express';
 import router from './routes/index.router.js';
-import pool from './libs/mysql.pool.js';
-
-
 
 const app = express();
 const port = 3000;

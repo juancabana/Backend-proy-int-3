@@ -19,6 +19,13 @@ class UserService {
     const newUser = await sequelize.models.User.create(data);
     return newUser;
   }
+  async delete(id) {
+    const user = await sequelize.models.User.findByPk(id);
+    user.destroy();
+    return {message: 'EL usuario se ha eliminado correctamente'}
+
+  }
+
 }
 
 export default UserService;
