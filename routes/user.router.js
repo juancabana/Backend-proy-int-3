@@ -1,32 +1,37 @@
 import expres from 'express';
-import pool from '../libs/mysql.pool.js';
+import UserServices from './../services/user.service.js';
+// import {sequelize} from '../libs/sequelize.js';
+import sequelize from './../libs/sequelize.js';
+
+// Connectin with BD by mysql.pool
+// import pool from '../libs/mysql.pool.js';
 
 const router = expres.Router();
+const service = new UserServices();
 
 // GET
-router.get('/', (req, res) => {
-  res.send({
-    message: 'Estos son los datos de este usuario',
-  });
+// Obtener todos los usuarios
+router.get('/', async (req, res, next) => {
+  const users = await service.find();
+  res.json({ ...users });
+});
+
+// Obtener un usuario por id
+router.get('/:id', async (req, res, next) => {
+  const id = req.params['id'];
+  const user = await service.findOne(id);
+  res.json({
+    data: user.dataValues,
+    ...user });
 });
 
 // POST
 router.post('/', async (req, res) => {
   const body = req.body;
-  const {first_name_user, last_name_user, email_user, password_user, image_user, phone_number} = req.body
-  const query = `
-  INSERT INTO User (first_name_user, last_name_user, email_user, password_user, image_user, phone_number)
-  VALUES ( ${first_name_user}, ${last_name_user ? last_name_user : null}, ${email_user},
-    ${password_user},
-    ${image_user ? image_user : null},
-    ${phone_number})`;
-
-  const rta = await pool.query(query);
+  const newUser = await service.create(body);
   res.json({
-    message: 'El usuario se ha creado',
-    rta,
-    data: body,
-  });
+    newUser
+  })
 });
 
 export default router;
