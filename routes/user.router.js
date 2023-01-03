@@ -1,10 +1,5 @@
 import expres from 'express';
 import UserServices from './../services/user.service.js';
-// import {sequelize} from '../libs/sequelize.js';
-import sequelize from './../libs/sequelize.js';
-
-// Connectin with BD by mysql.pool
-// import pool from '../libs/mysql.pool.js';
 
 const router = expres.Router();
 const service = new UserServices();
