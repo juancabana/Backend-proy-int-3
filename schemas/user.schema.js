@@ -25,4 +25,4 @@ export const updateUserSchema = joi.object({
   phone_number: phone_number,
 });
 
-export const getAndDeleteUserSchema = joi.object({id: id.required()});
+export const getAndDeleteUserSchema = joi.object({ id: id.required() });

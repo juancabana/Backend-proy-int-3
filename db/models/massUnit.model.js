@@ -1,4 +1,4 @@
-import {Model, DataTypes} from 'sequelize'
+import { Model, DataTypes } from 'sequelize';
 
 export const MASS_UNIT_TABLE = 'Mass_unit_crop';
 
@@ -13,8 +13,7 @@ export const MassUnitSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
-
-}
+};
 
 export class MassUnitCrop extends Model {
   static associate() {}
@@ -24,7 +23,7 @@ export class MassUnitCrop extends Model {
       sequelize,
       tableName: MASS_UNIT_TABLE,
       modelName: 'Mass_unit_crop',
-      timestamps: false
+      timestamps: false,
     };
   }
 }

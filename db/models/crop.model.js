@@ -47,7 +47,7 @@ export class Crop extends Model {
       sequelize,
       tableName: CROP_TABLE,
       modelName: 'Crop',
-      timestamps: false
+      timestamps: false,
     };
   }
 }

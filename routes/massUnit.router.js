@@ -19,7 +19,7 @@ router.get('/', async (req, res, next) => {
 
 // Obtener unidad de masa por id
 router.get('/:id', async (req, res, next) => {
-  const {id} = req.params;
+  const { id } = req.params;
   try {
     const unit = await service.findOne(id);
     res.json({

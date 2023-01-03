@@ -37,17 +37,14 @@ export const UserSchema = {
 };
 
 export class User extends Model {
-  static associate () {
-
-  }
+  static associate() {}
 
   static config(sequelize) {
     return {
       sequelize,
       tableName: USER_TABLE,
       modelName: 'User',
-      timestamps: false
-    }
+      timestamps: false,
+    };
   }
 }
-

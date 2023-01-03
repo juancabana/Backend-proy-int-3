@@ -22,50 +22,55 @@ router.get('/', async (req, res, next) => {
 });
 
 // Obtener un usuario por id
-router.get('/:id',
- validatorHandler(getAndDeleteUserSchema, 'params'),
- async (req, res, next) => {
-  const { id } = req.params;
-  try {
-    const user = await service.findOne(id);
-    res.json({
-      data: user.dataValues,
-      ...user,
-    });
-  } catch (err) {
-    next(err);
+router.get(
+  '/:id',
+  validatorHandler(getAndDeleteUserSchema, 'params'),
+  async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const user = await service.findOne(id);
+      res.json({
+        data: user.dataValues,
+        ...user,
+      });
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 // POST
 // Crear nuevo usuario
-router.post('/',
-validatorHandler(createUserSchema, 'body'),
- async (req, res, next) => {
-  const body = req.body;
-  try {
-    const newUser = await service.create(body);
-    res.json({
-      newUser,
-    });
-  } catch (err) {
-    next(err);
+router.post(
+  '/',
+  validatorHandler(createUserSchema, 'body'),
+  async (req, res, next) => {
+    const body = req.body;
+    try {
+      const newUser = await service.create(body);
+      res.json({
+        newUser,
+      });
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 // DELETE
-router.delete('/:id',
-validatorHandler(getAndDeleteUserSchema, 'params'),
- async (req, res, next) => {
-
-  const { id } = req.params;
-  try {
-    const rta = await service.delete(id);
-    res.json({
-      rta,
-    });
-  } catch (err) {
-    next(err);
+router.delete(
+  '/:id',
+  validatorHandler(getAndDeleteUserSchema, 'params'),
+  async (req, res, next) => {
+    const { id } = req.params;
+    try {
+      const rta = await service.delete(id);
+      res.json({
+        rta,
+      });
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 export default router;
