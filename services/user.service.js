@@ -1,4 +1,5 @@
 import sequelize from './../libs/sequelize.js';
+import boom from '@hapi/boom';
 
 class UserService {
   constructor() {}
@@ -10,10 +11,9 @@ class UserService {
   async findOne(id) {
     const user = await sequelize.models.User.findByPk(id);
     if (!user) {
-      return 'User not found';
-    } else {
-      return user;
+      throw boom.notFound('User not found');
     }
+    return user;
   }
   async create(data) {
     const newUser = await sequelize.models.User.create(data);
@@ -21,11 +21,12 @@ class UserService {
   }
   async delete(id) {
     const user = await sequelize.models.User.findByPk(id);
+    if (!user) {
+      throw boom.notFound('User not found');
+    }
     await user.destroy();
-    return {message: 'EL usuario se ha eliminado correctamente'}
-
+    return { message: 'EL usuario se ha eliminado correctamente' };
   }
-
 }
 
 export default UserService;

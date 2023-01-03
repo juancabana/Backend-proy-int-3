@@ -7,39 +7,54 @@ const service = new CropService();
 // GET
 // Obtener lista de cosechas
 router.get('/', async (req, res, next) => {
-  const crops = await service.find();
-  res.json({ ...crops });
+  try {
+    const crops = await service.find();
+    res.json({ ...crops });
+  } catch (err) {
+    next(err);
+  }
 });
 
 // POST
 // Crear nueva cosecha
-router.post('/', async (req, res) => {
+router.post('/', async (req, res, next) => {
   const body = req.body;
-  const newCrop = await service.create(body);
-  res.json({
-    newCrop,
-  });
+  try {
+    const newCrop = await service.create(body);
+    res.json({
+      newCrop,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 // DELETE
 // Eliminar cosecha
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req, res, next) => {
   const { id } = req.params;
-  const rta = await service.delete(id);
-  res.json({
-    rta,
-  });
+  try {
+    const rta = await service.delete(id);
+    res.json({
+      rta,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 // UPDATE
 // Actualizar cosecha
-router.put('/:id', async (req, res) => {
+router.put('/:id', async (req, res, next) => {
   const { id } = req.params;
   const body = req.body;
-  const rta = await service.update(id, body);
-
-  res.json({
-    rta,
-  });
+  try {
+    const rta = await service.update(id, body);
+    res.json({
+      rta,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default router;

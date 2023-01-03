@@ -1,5 +1,6 @@
 import express from 'express';
 import router from './routes/index.router.js';
+import {errorHandler, logErrors, boomErrorHandler} from './middlewares/error.handler.js'
 
 const app = express();
 const port = 3000;
@@ -16,4 +17,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/', router);
-app.use((req, res) => res.status(404).send('Not found'));
+app.use(logErrors);
+app.use(boomErrorHandler);
+app.use(errorHandler);
+// app.use((req, res) => res.status(404).send('Not found'));
