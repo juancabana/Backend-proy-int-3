@@ -18,7 +18,7 @@ export const ComentarySchema = {
 
 export class Comentary extends Model {
   static associate(models) {
-    this.hasMany(models.Post, {
+    this.hasOne(models.Post, {
       as: POST_TABLE,
       foreignKey: 'id_comentary'
     })

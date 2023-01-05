@@ -10,6 +10,12 @@ export const UserSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
+  role: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: 'user'
+
+  },
   first_name_user: {
     allowNull: false,
     type: DataTypes.STRING,
@@ -42,6 +48,9 @@ export class User extends Model {
     this.hasMany(models.Crop, {
       as: CROP_TABLE,
       foreignKey: 'id_user',
+    });
+    this.belongsTo(models.Mass_unit_crop, {
+      as: 'Mass_unit_crop',
     });
   }
 

@@ -61,16 +61,13 @@ export const CropSchema = {
 
 export class Crop extends Model {
   static associate(models) {
-    this.belongsTo(models.User, {
+    this.hasOne(models.User, {
       as: 'User',
     });
-    this.belongsTo(models.Mass_unit_crop, {
+    this.hasOne(models.Mass_unit_crop, {
       as: 'Mass_unit_crop',
     });
-    // this.belongsTo(models.Post, {
-    //   as: 'Post',
-    //   foreignKey: 'id_crop'
-    // })
+    this.belongsTo(models.Post)
   }
 
   static config(sequelize) {

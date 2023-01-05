@@ -14,6 +14,10 @@ export const MassUnitSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
+  key_mass_unit_crop: {
+    allowNull: false,
+    type: DataTypes.STRING,
+  },
 };
 
 export class MassUnitCrop extends Model {
@@ -21,6 +25,10 @@ export class MassUnitCrop extends Model {
     this.hasMany(models.Crop, {
       as: CROP_TABLE,
       foreignKey: 'id_mass_unit_crop',
+    });
+    this.belongsTo(models.User, {
+      as: 'User',
+      foreignKey: 'id_user',
     });
   }
 

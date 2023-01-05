@@ -15,7 +15,7 @@ router.get('/', async (req, res, next) => {
   try {
     const units = await service.find();
     res.json({
-      units,
+      ...units,
     });
   } catch (err) {
     next(err);

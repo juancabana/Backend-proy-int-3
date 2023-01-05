@@ -44,9 +44,11 @@ export class Post extends Model {
   static associate(models) {
     this.hasOne(models.Crop, {
       as: 'Crop',
+      foreignKey: 'id_crop'
     });
-    this.belongsTo(models.Comentary, {
+    this.hasOne(models.Comentary, {
       as: 'Comentary',
+      foreignKey: 'id_comentary'
     });
   }
 
