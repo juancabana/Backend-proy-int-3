@@ -29,7 +29,7 @@ export const PostSchema = {
     onDelete: 'CASCADE',
   },
   id_comentary: {
-    allowNull: false,
+    allowNull: true,
     type: DataTypes.INTEGER,
     references: {
       model: 'Comentary',

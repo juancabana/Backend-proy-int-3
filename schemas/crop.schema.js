@@ -4,7 +4,38 @@ const id = joi.number().id();
 const title = joi.string().alphanum().min(3).max(15);
 const description = joi.string();
 const city = joi.string().alphanum().min(3);
-const email_user = joi.string().email();
-const password_user = joi.string().min(5);
-const image_user = joi.string().allow(null).allow('');
-const phone_number = joi.number().integer().positive();
+const departament = joi.string().alphanum().min(3);
+const image = joi.string().allow(null).allow('');
+const address = joi.string();
+const price = joi.number();
+
+export const CreateCropSchema = joi.object({
+  title_crop: title.required(),
+  description_crop: description.required(),
+  city_crop: city.required(),
+  departament_crop: departament.required(),
+  image_crop: image.required(),
+  address_crop: address.required(),
+  price_crop: price.required(),
+  description_post: description.required(),
+  id_user: id.required(),
+  id_mass_unit_crop: id.required(),
+
+});
+export const UpdateCropSchema = joi.object({
+  id_crop: id.required(),
+  title_crop: title.required(),
+  description_crop: description.required(),
+  city_crop: city.required(),
+  departament_crop: departament.required(),
+  image_crop: image.required(),
+  address_crop: address.required(),
+  price_crop: price.required(),
+  description_post: description.required(),
+  id_user: id.required(),
+  id_mass_unit_crop: id.required(),
+});
+
+export const getAndDelete = joi.required({
+  id: id.required(),
+});
