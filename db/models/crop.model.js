@@ -1,4 +1,4 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
 
 export const CROP_TABLE = 'Crop';
 
@@ -26,7 +26,7 @@ export const CropSchema = {
     type: DataTypes.STRING,
   },
   image_crop: {
-    defaultValue: 'image',
+    defaultValue: DataTypes.STRING,
     type: DataTypes.STRING,
   },
   address_crop: {
@@ -37,10 +37,41 @@ export const CropSchema = {
     allowNull: false,
     type: DataTypes.INTEGER,
   },
+  id_user: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'User',
+      key: 'id_user',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
+  id_mass_unit_crop: {
+    allowNull: false,
+    type: DataTypes.INTEGER,
+    references: {
+      model: 'Mass_unit_crop',
+      key: 'id_mass_unit_crop',
+    },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+  },
 };
 
 export class Crop extends Model {
-  static associate() {}
+  static associate(models) {
+    this.belongsTo(models.User, {
+      as: 'User',
+    });
+    this.belongsTo(models.Mass_unit_crop, {
+      as: 'Mass_unit_crop',
+    });
+    // this.belongsTo(models.Post, {
+    //   as: 'Post',
+    //   foreignKey: 'id_crop'
+    // })
+  }
 
   static config(sequelize) {
     return {

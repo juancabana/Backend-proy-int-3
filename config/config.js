@@ -1,14 +1,15 @@
-import dotenv from 'dotenv';
-dotenv.config();
+// import dotenv from 'dotenv';
+// dotenv.config();
 
-const config = {
+export default {
+  username: 'root',
+  user: 'root',
+  password: 'password',
   dbHost: 'localhost',
-  dbUser: 'root',
-  dbPort: 3306,
-  dbName: 'cosco',
-  dbPassword: 'Password123#@!',
-  env: process.env.NODE_ENV || 'dev',
-  port: process.env.PORT || 3000,
-};
+  port: 3306,
+  database: 'cosco',
+  env: 'development',
+  // port: process.env.PORT || 3000,
+  dialect: 'mysql',
 
-export default config;
+};

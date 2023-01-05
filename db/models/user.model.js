@@ -1,4 +1,5 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { Model, DataTypes } from 'sequelize';
+import { CROP_TABLE } from './crop.model.js';
 
 export const USER_TABLE = 'User';
 
@@ -37,7 +38,12 @@ export const UserSchema = {
 };
 
 export class User extends Model {
-  static associate() {}
+  static associate(models) {
+    this.hasMany(models.Crop, {
+      as: CROP_TABLE,
+      foreignKey: 'id_user',
+    });
+  }
 
   static config(sequelize) {
     return {
