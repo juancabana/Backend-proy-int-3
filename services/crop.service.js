@@ -1,24 +1,57 @@
 import sequelize from '../libs/sequelize.js';
+import { Op } from 'sequelize';
 import boom from '@hapi/boom';
 
 class CropServices {
   constructor() {}
 
-  async find() {
-    const crops = await sequelize.models.Crop.findAll({
+  async find(query) {
+    const options = {
+      // will include the users and mass units that are associated
       include: [
         {
           model: sequelize.models.User,
           as: 'owner',
-          attributes: ['id', 'first_name_user', 'last_name_user', 'role', 'email_user', 'image_user', 'phone_number']
+          attributes: [
+            'id',
+            'first_name_user',
+            'last_name_user',
+            'role',
+            'email_user',
+            'image_user',
+            'phone_number',
+          ],
         },
         {
-         model: sequelize.models.Mass_unit_crop,
-         as: 'massUnit',
-
-        }
+          model: sequelize.models.Mass_unit_crop,
+          as: 'massUnit',
+        },
       ],
-    });
+      // filter
+      where: {},
+    };
+
+    const { limit, offset } = query;
+    const { price, city, departament } = query;
+    const { price_min, price_max } = query;
+
+    if (limit && offset) {
+      (options.limit = limit), (options.offset = offset);
+    }
+    // If the following parameters like as 'Query' they are sent to options
+    price ? (options.where.price = price) : false;
+    city ? (options.where.city = city) : false;
+    departament ? (options.where.departament = departament) : false;
+
+    // Validation by price range
+    price_min && price_max
+      ? (options.where.price = {
+          [Op.gte]: price_min,
+          [Op.lte]: price_max,
+        })
+      : false;
+
+    const crops = await sequelize.models.Crop.findAll(options);
     return crops;
   }
   async findOne(id) {
@@ -27,20 +60,26 @@ class CropServices {
         {
           model: sequelize.models.User,
           as: 'owner',
-          attributes: ['id', 'first_name_user', 'last_name_user', 'role', 'email_user', 'image_user', 'phone_number']
+          attributes: [
+            'id',
+            'first_name_user',
+            'last_name_user',
+            'role',
+            'email_user',
+            'image_user',
+            'phone_number',
+          ],
         },
         {
-         model: sequelize.models.Mass_unit_crop,
-         as: 'massUnit',
-
-        }
+          model: sequelize.models.Mass_unit_crop,
+          as: 'massUnit',
+        },
       ],
-    })
+    });
     if (!crop) {
       throw boom.notFound('Crop not found');
     }
     return crop;
-
   }
   async create(data) {
     const newCrop = await sequelize.models.Crop.create(data);

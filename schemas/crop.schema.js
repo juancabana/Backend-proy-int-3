@@ -9,6 +9,26 @@ const image = joi.string().allow(null).allow('');
 const address = joi.string();
 const price = joi.number();
 
+
+const price_min = joi.number();
+const price_max = joi.number();
+
+const limit = joi.number().integer();
+const offset = joi.number().integer();
+
+export const queryListCropSchema = joi.object({
+  limit,
+  offset,
+  price,
+  city,
+  departament,
+  price_min,
+  price_max: price_max.when('price_min', {
+    is: joi.number().integer(),
+    then: joi.required()
+  })
+});
+
 export const CreateCropSchema = joi.object({
   UserId: id.required(),
   unitMassId: id.required(),
@@ -33,6 +53,6 @@ export const UpdateCropSchema = joi.object({
   price_crop: price.required(),
 });
 
-export const getAndDelete = joi.required({
+export const getAndDeleteSchema = joi.required({
   id: id.required(),
 });
