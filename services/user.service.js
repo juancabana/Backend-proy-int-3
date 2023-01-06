@@ -5,7 +5,37 @@ class UserService {
   constructor() {}
 
   async find() {
-    const users = await sequelize.models.User.findAll();
+    const users = await sequelize.models.User.findAll({
+      attributes: [
+        'id',
+        'role',
+        'first_name_user',
+        'last_name_user',
+        'email_user',
+        'image_user',
+        'phone_number',
+      ],
+      include: [
+        {
+          model: sequelize.models.Crop,
+          as: 'crops',
+          attributes: [
+            'id',
+            'title_crop',
+            'description_crop',
+            'city_crop',
+            'departament_crop',
+            'image_crop',
+            'address_crop',
+            'price_crop',
+          ],
+          include: {
+            model: sequelize.models.Mass_unit_crop,
+            as: 'massUnit',
+          },
+        },
+      ],
+    });
     return users;
   }
   async findOne(id) {

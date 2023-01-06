@@ -9,12 +9,16 @@ export const CropSchema = {
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  // UserCropId: {
-  //   unique: true,
-  //   allowNull: false,
-  //   primaryKey: true,
-  //   type: DataTypes.INTEGER,
-  // },
+  UserId: {
+    // unique: true,
+    allowNull: false,
+    type: DataTypes.INTEGER,
+  },
+  unitMassId: {
+    // unique: true,
+    allowNull: false,
+    type: DataTypes.INTEGER,
+  },
   title_crop: {
     allowNull: false,
     type: DataTypes.STRING,
@@ -75,11 +79,20 @@ export class Crop extends Model {
     //   as: 'User',
     // });
     this.hasOne(models.Post, {
-      as: 'crop_post', foreignKey: 'CropPostId'
-    })
+      as: 'crop_post',
+      foreignKey: 'CropPostId',
+    });
     // this.belongsTo(models.User, {
     //   as: 'crop_user', foreignKey: 'UserCropId'
     // })
+    this.belongsTo(models.User, {
+      as: 'owner',
+      foreignKey: 'UserId',
+    });
+    this.belongsTo(models.Mass_unit_crop, {
+      as: 'massUnit',
+      foreignKey: 'unitMassId'
+    })
   }
 
   static config(sequelize) {

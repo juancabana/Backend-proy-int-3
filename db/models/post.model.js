@@ -22,7 +22,7 @@ export const PostSchema = {
   CropPostId: {
     unique: true,
     allowNull: false,
-    primaryKey: true,
+    // primaryKey: true,
     type: DataTypes.INTEGER,
   },
   // cropId: {

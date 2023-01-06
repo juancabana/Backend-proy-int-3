@@ -53,6 +53,9 @@ export class User extends Model {
     // this.hasOne(models.Crop, {
     //   as: 'user_crop', foreignKey: 'UserCropId'
     // })
+    this.hasMany(models.Crop, {
+      as: 'crops', foreignKey: 'UserId'
+    })
   }
 
   static config(sequelize) {

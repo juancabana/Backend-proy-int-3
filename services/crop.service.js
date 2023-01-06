@@ -6,7 +6,16 @@ class CropServices {
 
   async find() {
     const crops = await sequelize.models.Crop.findAll({
-      include: 'crop_user'
+      include: [
+        {
+          model: sequelize.models.User,
+          as: 'owner',
+        },
+        {
+         model: sequelize.models.Mass_unit_crop,
+         as: 'massUnit',
+        }
+      ],
     });
     return crops;
   }
@@ -15,9 +24,7 @@ class CropServices {
     return newCrop;
   }
   async delete(id) {
-    const crop = await sequelize.models.Crop.findByPk(id, {
-      include: ['User']
-    });
+    const crop = await sequelize.models.Crop.findByPk(id);
     if (!crop) {
       throw boom.notFound('Crop not found');
     }

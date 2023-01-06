@@ -22,9 +22,12 @@ export const MassUnitSchema = {
 
 export class MassUnitCrop extends Model {
   static associate(models) {
+    this.hasMany(models.Crop, {
+      as: 'massUnit',
+      foreignKey: 'unitMassId'
+    })
     // this.hasMany(models.Crop, {
-    //   as: 'Crop',
-    //   foreignKey: 'mass_unit_id'
+    //   as: 'unitMass', foreignKey: 'mass_unit_id'
     // })
   }
 
