@@ -10,14 +10,37 @@ class CropServices {
         {
           model: sequelize.models.User,
           as: 'owner',
+          attributes: ['id', 'first_name_user', 'last_name_user', 'role', 'email_user', 'image_user', 'phone_number']
         },
         {
          model: sequelize.models.Mass_unit_crop,
          as: 'massUnit',
+
         }
       ],
     });
     return crops;
+  }
+  async findOne(id) {
+    const crop = await sequelize.models.Crop.findByPk(id, {
+      include: [
+        {
+          model: sequelize.models.User,
+          as: 'owner',
+          attributes: ['id', 'first_name_user', 'last_name_user', 'role', 'email_user', 'image_user', 'phone_number']
+        },
+        {
+         model: sequelize.models.Mass_unit_crop,
+         as: 'massUnit',
+
+        }
+      ],
+    })
+    if (!crop) {
+      throw boom.notFound('Crop not found');
+    }
+    return crop;
+
   }
   async create(data) {
     const newCrop = await sequelize.models.Crop.create(data);

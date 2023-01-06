@@ -29,10 +29,7 @@ router.get(
     const { id } = req.params;
     try {
       const user = await service.findOne(id);
-      res.json({
-        data: user.dataValues,
-        ...user,
-      });
+      res.json(user);
     } catch (err) {
       next(err);
     }

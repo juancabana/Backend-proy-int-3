@@ -5,11 +5,45 @@ class ServiceMassUnit {
   constructor() {}
 
   async find() {
-    const units = await sequelize.models.Mass_unit_crop.findAll();
+    const units = await sequelize.models.Mass_unit_crop.findAll({
+      include: [
+        {
+          model: sequelize.models.Crop,
+          as: 'massUnit',
+          attributes: [
+            'id',
+            'title_crop',
+            'description_crop',
+            'city_crop',
+            'departament_crop',
+            'image_crop',
+            'address_crop',
+            'price_crop',
+          ],
+        },
+      ],
+    });
     return units;
   }
   async findOne(id) {
-    const unit = await sequelize.models.Mass_unit_crop.findByPk(id);
+    const unit = await sequelize.models.Mass_unit_crop.findByPk(id, {
+      include: [
+        {
+          model: sequelize.models.Crop,
+          as: 'massUnit',
+          attributes: [
+            'id',
+            'title_crop',
+            'description_crop',
+            'city_crop',
+            'departament_crop',
+            'image_crop',
+            'address_crop',
+            'price_crop',
+          ],
+        },
+      ],
+    });
     if (!unit) {
       throw boom.notFound('Mass unit not found');
     }

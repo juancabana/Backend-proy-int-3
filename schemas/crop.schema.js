@@ -21,7 +21,7 @@ export const CreateCropSchema = joi.object({
   price_crop: price.required(),
 });
 export const UpdateCropSchema = joi.object({
-  id_crop: id.required(),
+  id: id.required(),
   UserId: id.required(),
   unitMassId: id.required(),
   title_crop: title.required(),
