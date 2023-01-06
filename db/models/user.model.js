@@ -13,8 +13,7 @@ export const UserSchema = {
   role: {
     allowNull: false,
     type: DataTypes.STRING,
-    defaultValue: 'user'
-
+    defaultValue: 'user',
   },
   first_name_user: {
     allowNull: false,
@@ -44,18 +43,14 @@ export const UserSchema = {
 };
 
 export class User extends Model {
+  // Relaciones
   static associate(models) {
-    // this.hasMany(models.Crop, {
-    //   as: 'Crop',
-    //   foreignKey: 'user_id'
-    // })
-    // this.hasOne(models.Crop)
-    // this.hasOne(models.Crop, {
-    //   as: 'user_crop', foreignKey: 'UserCropId'
-    // })
+    // User has many crops
+    // ForeignKey in Crop
     this.hasMany(models.Crop, {
-      as: 'crops', foreignKey: 'UserId'
-    })
+      as: 'crops',
+      foreignKey: 'UserId',
+    });
   }
 
   static config(sequelize) {

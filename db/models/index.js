@@ -4,6 +4,7 @@ import { MassUnitSchema, MassUnitCrop } from './massUnit.model.js';
 import { PostSchema, Post } from './post.model.js';
 import { ComentarySchema, Comentary } from './comentary.model.js';
 
+// Se ejecutan todas las relaciones y se inicializa cada esquema
 export function setupModels(sequelize) {
   User.init(UserSchema, User.config(sequelize));
   MassUnitCrop.init(MassUnitSchema, MassUnitCrop.config(sequelize));

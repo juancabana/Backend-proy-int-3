@@ -47,52 +47,28 @@ export const CropSchema = {
     allowNull: false,
     type: DataTypes.INTEGER,
   },
-  // user_id: {
-  //   field: 'user_id',
-  //   allowNull: false,
-  //   type: DataTypes.INTEGER,
-  //   references: {
-  //     model: 'User',
-  //     key: 'id',
-  //   },
-  //   onUpdate: 'CASCADE',
-  //   onDelete: 'CASCADE',
-  // },
-  // mass_unit_id: {
-  //   field: 'mass_unit_id',
-  //   allowNull: false,
-  //   type: DataTypes.INTEGER,
-  //   references: {
-  //     model: 'Mass_unit_crop',
-  //     key: 'id',
-  //   },
-  //   onUpdate: 'CASCADE',
-  //   onDelete: 'CASCADE',
-  // },
 };
 export class Crop extends Model {
+  // Relaciones
   static associate(models) {
-    // this.belongsTo(models.Mass_unit_crop, {
-    //   as: 'Mass_unit_crop',
-    // });
-    // this.belongsTo(models.User, {
-    //   as: 'User',
-    // });
+    // Crop has one Post relacionated
+    // ForeignKey in Post
     this.hasOne(models.Post, {
       as: 'crop_post',
       foreignKey: 'CropPostId',
     });
-    // this.belongsTo(models.User, {
-    //   as: 'crop_user', foreignKey: 'UserCropId'
-    // })
+    // Crop has belogs to one User
+    // ForeignKey here
     this.belongsTo(models.User, {
       as: 'owner',
       foreignKey: 'UserId',
     });
+    // Crop has one mass unit
+    // ForeignKey here
     this.belongsTo(models.Mass_unit_crop, {
       as: 'massUnit',
-      foreignKey: 'unitMassId'
-    })
+      foreignKey: 'unitMassId',
+    });
   }
 
   static config(sequelize) {

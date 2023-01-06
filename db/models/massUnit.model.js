@@ -1,5 +1,4 @@
 import { Model, DataTypes } from 'sequelize';
-import { CROP_TABLE } from './crop.model.js';
 
 export const MASS_UNIT_TABLE = 'Mass_unit_crop';
 
@@ -21,14 +20,14 @@ export const MassUnitSchema = {
 };
 
 export class MassUnitCrop extends Model {
+  // Relaciones
+  // MassUnitCrop has many crops relacionated
+  // ForeignKey in Crop
   static associate(models) {
     this.hasMany(models.Crop, {
       as: 'massUnit',
-      foreignKey: 'unitMassId'
-    })
-    // this.hasMany(models.Crop, {
-    //   as: 'unitMass', foreignKey: 'mass_unit_id'
-    // })
+      foreignKey: 'unitMassId',
+    });
   }
 
   static config(sequelize) {

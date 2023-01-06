@@ -17,32 +17,22 @@ export const PostSchema = {
     allowNull: false,
     type: DataTypes.DATE(),
     defaultValue: Sequelize.NOW,
-
   },
   CropPostId: {
     unique: true,
     allowNull: false,
-    // primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  // cropId: {
-  //   field: 'crop_id',
-  //   allowNull: false,
-  //   type: DataTypes.INTEGER,
-  //   unique: true,
-  //   references: {
-  //     model: 'Crop',
-  //     key: 'id'
-  //   },
-  //   onUpdate: 'CASCADE',
-  //   onDelete: 'CASCADE',
-  // },
 };
 
 export class Post extends Model {
+  // Relaciones
+  // Post has one relacionated
+  // ForeignKey here
   static associate(models) {
     this.belongsTo(models.Crop, {
-      as: 'post_crop', foreignKey: 'CropPostId'
+      as: 'post_crop',
+      foreignKey: 'CropPostId',
     });
   }
 

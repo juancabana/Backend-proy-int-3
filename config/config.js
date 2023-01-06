@@ -1,5 +1,4 @@
-// import dotenv from 'dotenv';
-// dotenv.config();
+// Configuración de conección sequelize
 
 export default {
   username: 'root',
@@ -11,5 +10,4 @@ export default {
   env: 'development',
   // port: process.env.PORT || 3000,
   dialect: 'mysql',
-
 };

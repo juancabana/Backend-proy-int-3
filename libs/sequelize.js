@@ -9,6 +9,7 @@ const DBPORT = encodeURIComponent(config.port);
 const DBNAME = encodeURIComponent(config.database);
 const URI = `mysql://${DBUSER}:${DBPASSWORD}@${DBHOST}:${DBPORT}/${DBNAME}`;
 
+// Conexion with database
 // Pool and sequelize (ORM)
 const sequelize = new Sequelize(URI, {
   dialect: 'mysql',
