@@ -5,7 +5,9 @@ class CropServices {
   constructor() {}
 
   async find() {
-    const crops = await sequelize.models.Crop.findAll();
+    const crops = await sequelize.models.Crop.findAll({
+      include: 'crop_user'
+    });
     return crops;
   }
   async create(data) {
@@ -13,7 +15,9 @@ class CropServices {
     return newCrop;
   }
   async delete(id) {
-    const crop = await sequelize.models.Crop.findByPk(id);
+    const crop = await sequelize.models.Crop.findByPk(id, {
+      include: ['User']
+    });
     if (!crop) {
       throw boom.notFound('Crop not found');
     }
@@ -22,12 +26,12 @@ class CropServices {
       message: 'EL usuario se ha eliminado correctamente',
     };
   }
-  update(id, data) {
-    const crop = sequelize.models.Crop.findByPk(id);
+  async update(id, data) {
+    const crop = await sequelize.models.Crop.findByPk(id);
     if (!crop) {
       throw boom.notFound('Crop not found');
     }
-    const rta = crop.update(data);
+    const rta = await crop.update(data);
     return rta;
   }
 }

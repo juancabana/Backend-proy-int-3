@@ -17,10 +17,8 @@ export const CreateCropSchema = joi.object({
   image_crop: image.required(),
   address_crop: address.required(),
   price_crop: price.required(),
-  description_post: description.required(),
-  id_user: id.required(),
+  UserCropId: id.required(),
   id_mass_unit_crop: id.required(),
-
 });
 export const UpdateCropSchema = joi.object({
   id_crop: id.required(),
@@ -31,8 +29,7 @@ export const UpdateCropSchema = joi.object({
   image_crop: image.required(),
   address_crop: address.required(),
   price_crop: price.required(),
-  description_post: description.required(),
-  id_user: id.required(),
+  UserCropId: id.required(),
   id_mass_unit_crop: id.required(),
 });
 

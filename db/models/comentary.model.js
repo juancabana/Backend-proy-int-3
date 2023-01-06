@@ -18,10 +18,7 @@ export const ComentarySchema = {
 
 export class Comentary extends Model {
   static associate(models) {
-    this.hasOne(models.Post, {
-      as: POST_TABLE,
-      foreignKey: 'id_comentary'
-    })
+
   }
 
   static config(sequelize) {

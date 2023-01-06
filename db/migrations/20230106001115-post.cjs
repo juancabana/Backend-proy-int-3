@@ -6,6 +6,7 @@ module.exports = {
   up: async (queryInterface) => {
     const { POST_TABLE, PostSchema } = await models;
 
+
     return queryInterface.createTable(POST_TABLE, PostSchema);
   },
 

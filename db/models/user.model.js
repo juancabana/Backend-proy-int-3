@@ -4,7 +4,7 @@ import { CROP_TABLE } from './crop.model.js';
 export const USER_TABLE = 'User';
 
 export const UserSchema = {
-  id_user: {
+  id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
@@ -45,13 +45,14 @@ export const UserSchema = {
 
 export class User extends Model {
   static associate(models) {
-    this.hasMany(models.Crop, {
-      as: CROP_TABLE,
-      foreignKey: 'id_user',
-    });
-    this.belongsTo(models.Mass_unit_crop, {
-      as: 'Mass_unit_crop',
-    });
+    // this.hasMany(models.Crop, {
+    //   as: 'Crop',
+    //   foreignKey: 'user_id'
+    // })
+    // this.hasOne(models.Crop)
+    // this.hasOne(models.Crop, {
+    //   as: 'user_crop', foreignKey: 'UserCropId'
+    // })
   }
 
   static config(sequelize) {
