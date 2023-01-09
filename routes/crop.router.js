@@ -24,6 +24,8 @@ router.get(
     }
   }
 );
+
+// Obtener cosecha por id
 router.get(
   '/:id',
   validatorHandler(getAndDeleteSchema, 'params'),
@@ -31,7 +33,7 @@ router.get(
     const { id } = req.params;
     try {
       const crop = await service.findOne(id);
-      res.json({ ...crop });
+      res.json(crop);
     } catch (err) {
       next(err);
     }

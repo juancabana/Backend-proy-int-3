@@ -3,15 +3,17 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 export const POST_TABLE = 'Post';
 
 export const PostSchema = {
-  id_post: {
+  id: {
     allowNull: false,
     autoIncrement: true,
     primaryKey: true,
     type: DataTypes.INTEGER,
   },
-  description_post: {
+  likes: {
     allowNull: false,
-    type: DataTypes.TEXT,
+    defaultValue: 0,
+    type: DataTypes.INTEGER,
+
   },
   create_date_post: {
     allowNull: false,
