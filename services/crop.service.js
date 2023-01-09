@@ -39,13 +39,13 @@ class CropServices {
       (options.limit = limit), (options.offset = offset);
     }
     // If the following parameters like as 'Query' they are sent to options
-    price ? (options.where.price = price) : false;
-    city ? (options.where.city = city) : false;
-    departament ? (options.where.departament = departament) : false;
+    price ? (options.where.price_crop = price) : false;
+    city ? (options.where.city_crop = city) : false;
+    departament ? (options.where.departament_crop = departament) : false;
 
     // Validation by price range
     price_min && price_max
-      ? (options.where.price = {
+      ? (options.where.price_crop = {
           [Op.gte]: price_min,
           [Op.lte]: price_max,
         })

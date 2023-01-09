@@ -22,11 +22,13 @@ export const queryListCropSchema = joi.object({
   price,
   city,
   departament,
+
   price_min,
-  price_max: price_max.when('price_min', {
-    is: joi.number().integer(),
-    then: joi.required()
-  })
+  price_max
+  // : price_max.when('price_min', {
+  //   is: joi.number(),
+  //   then: joi.required()
+  // })
 });
 
 export const CreateCropSchema = joi.object({
