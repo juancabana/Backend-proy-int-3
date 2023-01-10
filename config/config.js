@@ -10,4 +10,5 @@ export default {
   env: 'development',
   // port: process.env.PORT || 3000,
   dialect: 'mysql',
+  jwtSecret: 'rOk9ZPWMvf8ViHO9gY3qgM5lcNhuKmp3'
 };
