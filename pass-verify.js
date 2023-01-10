@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 
 const verifyPassword = async () => {
-  const myPassword = 'admin123.#$%';
-  const hash = '$2b$10$THf8zcfhTCfhnBupojLfKuTAnK43aMY2MD3z5qGr/Zts5S/GS392G';
-  const isMatch = await bcrypt.compare(myPassword, hash)
+  const myPassword = 'password123';
+  const hash = '$2b$10$gE65z4dUHoB5MHIbi4ds3u0rpVUDFak5sqitfT.6nqMlutE05HZua';
+  const isMatch = await bcrypt.compare(myPassword, hash);
   console.log(isMatch);
-}
-verifyPassword()
+};
+verifyPassword();

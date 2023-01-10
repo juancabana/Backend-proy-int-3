@@ -20,7 +20,7 @@ app.listen(port, () => {
 app.get('/', checkAPIKey, (req, res) => {
   res.send('Hello world');
 });
-
+import './utils/auth/index.js';
 app.use('/', router);
 app.use(logErrors);
 app.use(boomErrorHandler);
