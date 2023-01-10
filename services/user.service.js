@@ -1,5 +1,6 @@
 import sequelize from './../libs/sequelize.js';
 import boom from '@hapi/boom';
+import bcrypt from 'bcrypt';
 
 class UserService {
   constructor() {}
@@ -32,7 +33,12 @@ class UserService {
     return user;
   }
   async create(data) {
-    const newUser = await sequelize.models.User.create(data);
+    const hash = await bcrypt.hash(data.password_user, 10);
+    const newUser = await sequelize.models.User.create({
+      ...data,
+      password_user: hash
+    });
+    delete newUser.dataValues.password_user;
     return newUser;
   }
   async delete(id) {

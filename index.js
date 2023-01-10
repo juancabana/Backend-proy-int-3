@@ -1,6 +1,11 @@
 import express from 'express';
 import router from './routes/index.router.js';
-import {errorHandler, logErrors, boomErrorHandler} from './middlewares/error.handler.js'
+import {
+  errorHandler,
+  logErrors,
+  boomErrorHandler,
+} from './middlewares/error.handler.js';
+import { checkAPIKey } from './middlewares/auth.handler.js';
 
 const app = express();
 const port = 3000;
@@ -12,7 +17,7 @@ app.listen(port, () => {
   console.log(`Aplicación corriendo en el puerto ${port}`);
 });
 
-app.get('/', (req, res) => {
+app.get('/', checkAPIKey, (req, res) => {
   res.send('Hello world');
 });
 
