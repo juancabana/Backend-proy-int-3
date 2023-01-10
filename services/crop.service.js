@@ -79,13 +79,16 @@ class CropServices {
   }
   async create(data) {
     const newCrop = await sequelize.models.Crop.create(data);
+    await sequelize.models.Post.create({CropPostId: newCrop.id})
     return newCrop;
   }
   async delete(id) {
     const crop = await sequelize.models.Crop.findByPk(id);
+    const post = await sequelize.models.Post.findByPk(id)
     if (!crop) {
       throw boom.notFound('Crop not found');
     }
+    await post.destroy();
     await crop.destroy();
     return {
       message: 'EL usuario se ha eliminado correctamente',

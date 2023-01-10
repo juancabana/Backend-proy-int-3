@@ -1,57 +1,32 @@
 import expres from 'express';
+import validatorHandler from './../middlewares/validator.handler.js';
+import { createPostSchema, updatePostDescription, getAndDeletePost} from './../schemas/post.schema.js'
+import PostService from '../services/post.service.js';
 
 const router = expres.Router();
+const service = new PostService();
 
 // GET
 
 // Obtener lista de posts
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    res.json({
-      message: 'Estamos obteniendo la lista de posts',
-    });
+    const posts = await service.find();
+    res.json(posts)
+
   } catch (err) {
     next(err);
   }
 });
 
 // Obtener un post por id
-router.get('/:id', (req, res, next) => {
+router.get('/:id',
+validatorHandler(getAndDeletePost, 'params'),
+ async (req, res, next) => {
   const { id } = req.params;
   try {
-    res.json({
-      message: `Estamos obteniendo el post ${id}`,
-    });
-  } catch (err) {
-    next(err);
-  }
-});
-
-// PATCH
-// Editar comentario de post
-router.patch('/', (req, res, next) => {
-  const body = req.body;
-  const { id } = req.body;
-  try {
-    res.json({
-      message: `Quieres editar este comentario del post ${id}`,
-      body,
-    });
-  } catch (err) {
-    next(err);
-  }
-});
-
-// POST
-// Crear nuevo comentario
-router.post('/:id', (req, res, next) => {
-  const { id } = req.body;
-  const body = req.body;
-  try {
-    res.json({
-      message: `Creaste un nuevo comentario al post con id:${id}`,
-      body,
-    });
+    const post = await service.findOne(id);
+    res.json(post);
   } catch (err) {
     next(err);
   }
