@@ -5,26 +5,34 @@ import {
   createMassUnitSchema,
   getAndDeleteMassUnitSchema,
 } from './../schemas/massUnit.schema.js';
+import passport from 'passport';
 
 const router = express.Router();
 const service = new mass_unitServices();
 
 // GET
 // Obtener lista de unidades de masa
-router.get('/', async (req, res, next) => {
-  try {
-    const units = await service.find();
-    res.json({
-      ...units,
-    });
-  } catch (err) {
-    next(err);
+router.get(
+  '/',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
+  async (req, res, next) => {
+    try {
+      const units = await service.find();
+      res.json({
+        ...units,
+      });
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 // Obtener unidad de masa por id
 router.get(
   '/:id',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(getAndDeleteMassUnitSchema, 'params'),
   async (req, res, next) => {
     const { id } = req.params;
@@ -43,6 +51,8 @@ router.get(
 // Crear nueva unidad de masa
 router.post(
   '/',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(createMassUnitSchema, 'body'),
   async (req, res, next) => {
     const body = req.body;
@@ -59,6 +69,8 @@ router.post(
 // Eliminar unidad de masa
 router.delete(
   '/:id',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(getAndDeleteMassUnitSchema, 'params'),
   async (req, res, next) => {
     const { id } = req.params;

@@ -6,24 +6,34 @@ import {
   getAndDeleteUserSchema,
   updateUserSchema,
 } from './../schemas/user.schema.js';
+import passport from 'passport';
+import { chechAdminRole } from './../middlewares/auth.handler.js';
 
 const router = expres.Router();
 const service = new UserServices();
 
 // GET
 // Obtener todos los usuarios
-router.get('/', async (req, res, next) => {
-  try {
-    const users = await service.find();
-    res.json({ ...users });
-  } catch (err) {
-    next(err);
+router.get(
+  '/',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
+  chechAdminRole,
+  async (req, res, next) => {
+    try {
+      const users = await service.find();
+      res.json({ ...users });
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 // Obtener un usuario por id
 router.get(
   '/:id',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(getAndDeleteUserSchema, 'params'),
   async (req, res, next) => {
     const { id } = req.params;
@@ -40,6 +50,8 @@ router.get(
 // Crear nuevo usuario
 router.post(
   '/',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(createUserSchema, 'body'),
   async (req, res, next) => {
     const body = req.body;
@@ -55,6 +67,8 @@ router.post(
 // DELETE
 router.delete(
   '/:id',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(getAndDeleteUserSchema, 'params'),
   async (req, res, next) => {
     const { id } = req.params;

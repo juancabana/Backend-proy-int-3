@@ -25,6 +25,8 @@ passport.authenticate('jwt', {session: false}),
 
 // Obtener un post por id
 router.get('/:id',
+// Protección de ruta a contra los no autenticados
+passport.authenticate('jwt', {session: false}),
 validatorHandler(getAndDeletePost, 'params'),
  async (req, res, next) => {
   const { id } = req.params;

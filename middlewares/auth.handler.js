@@ -1,10 +1,19 @@
-import boom from "@hapi/boom";
+import boom from '@hapi/boom';
 
 export const checkAPIKey = (req, res, next) => {
   const apiKey = req.headers['api'];
   if (apiKey === '123') {
-    next()
+    next();
   } else {
-    next(boom.unauthorized())
+    next(boom.unauthorized());
   }
-}
+};
+
+export const chechAdminRole = (req, res, next) => {
+  const user = req.user;
+  if (user.role === 'admin') {
+    next();
+  } else {
+    next(boom.forbidden('Role without permisions'));
+  }
+};

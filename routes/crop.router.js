@@ -7,6 +7,8 @@ import {
   getAndDeleteSchema,
   queryListCropSchema,
 } from './../schemas/crop.schema.js';
+import passport from 'passport';
+
 const router = expres.Router();
 const service = new CropService();
 
@@ -14,6 +16,8 @@ const service = new CropService();
 // Obtener lista de cosechas
 router.get(
   '/',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(queryListCropSchema, 'query'),
   async (req, res, next) => {
     try {
@@ -28,6 +32,8 @@ router.get(
 // Obtener cosecha por id
 router.get(
   '/:id',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(getAndDeleteSchema, 'params'),
   async (req, res, next) => {
     const { id } = req.params;
@@ -44,6 +50,8 @@ router.get(
 // Crear nueva cosecha
 router.post(
   '/',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(CreateCropSchema, 'body'),
   async (req, res, next) => {
     const body = req.body;
@@ -62,6 +70,8 @@ router.post(
 // Eliminar cosecha
 router.delete(
   '/:id',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(getAndDeleteSchema, 'params'),
   async (req, res, next) => {
     const { id } = req.params;
@@ -79,6 +89,8 @@ router.delete(
 // Actualizar cosecha
 router.put(
   '/:id',
+  // Protección de ruta a contra los no autenticados
+  passport.authenticate('jwt', { session: false }),
   validatorHandler(UpdateCropSchema, 'body'),
   async (req, res, next) => {
     const { id } = req.params;
