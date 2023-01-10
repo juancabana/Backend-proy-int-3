@@ -2,6 +2,7 @@ import expres from 'express';
 import validatorHandler from './../middlewares/validator.handler.js';
 import { createPostSchema, updatePostDescription, getAndDeletePost} from './../schemas/post.schema.js'
 import PostService from '../services/post.service.js';
+import passport from 'passport';
 
 const router = expres.Router();
 const service = new PostService();
@@ -9,7 +10,10 @@ const service = new PostService();
 // GET
 
 // Obtener lista de posts
-router.get('/', async (req, res, next) => {
+router.get('/',
+// Protección de ruta a contra los no autenticados
+passport.authenticate('jwt', {session: false}),
+ async (req, res, next) => {
   try {
     const posts = await service.find();
     res.json(posts)
