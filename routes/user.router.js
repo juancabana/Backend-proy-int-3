@@ -7,7 +7,7 @@ import {
   updateUserSchema,
 } from './../schemas/user.schema.js';
 import passport from 'passport';
-import { chechAdminRole } from './../middlewares/auth.handler.js';
+import { chechRoles } from './../middlewares/auth.handler.js';
 
 const router = expres.Router();
 const service = new UserServices();
@@ -16,9 +16,10 @@ const service = new UserServices();
 // Obtener todos los usuarios
 router.get(
   '/',
-  // Protección de ruta a contra los no autenticados
+  // Protección de ruta contra los no autenticados
   passport.authenticate('jwt', { session: false }),
-  chechAdminRole,
+  // Verificar rol del usuario
+  chechRoles(['admin']),
   async (req, res, next) => {
     try {
       const users = await service.find();
@@ -32,8 +33,10 @@ router.get(
 // Obtener un usuario por id
 router.get(
   '/:id',
-  // Protección de ruta a contra los no autenticados
+  // Protección de ruta contra los no autenticados
   passport.authenticate('jwt', { session: false }),
+  // Verificar rol del usuario
+  chechRoles(['admin']),
   validatorHandler(getAndDeleteUserSchema, 'params'),
   async (req, res, next) => {
     const { id } = req.params;
@@ -52,6 +55,8 @@ router.post(
   '/',
   // Protección de ruta a contra los no autenticados
   passport.authenticate('jwt', { session: false }),
+  // Verificar rol del usuario
+  chechRoles(['admin']),
   validatorHandler(createUserSchema, 'body'),
   async (req, res, next) => {
     const body = req.body;
@@ -67,8 +72,10 @@ router.post(
 // DELETE
 router.delete(
   '/:id',
-  // Protección de ruta a contra los no autenticados
+  // Protección de ruta contra los no autenticados
   passport.authenticate('jwt', { session: false }),
+  // Verificar rol del usuario
+  chechRoles(['admin']),
   validatorHandler(getAndDeleteUserSchema, 'params'),
   async (req, res, next) => {
     const { id } = req.params;

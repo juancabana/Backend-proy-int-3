@@ -8,6 +8,7 @@ import {
   queryListCropSchema,
 } from './../schemas/crop.schema.js';
 import passport from 'passport';
+import { chechRoles } from '../middlewares/auth.handler.js';
 
 const router = expres.Router();
 const service = new CropService();
@@ -18,6 +19,8 @@ router.get(
   '/',
   // Protección de ruta a contra los no autenticados
   passport.authenticate('jwt', { session: false }),
+  // Verificar rol del usuario
+  chechRoles(['admin', 'user']),
   validatorHandler(queryListCropSchema, 'query'),
   async (req, res, next) => {
     try {
@@ -34,6 +37,8 @@ router.get(
   '/:id',
   // Protección de ruta a contra los no autenticados
   passport.authenticate('jwt', { session: false }),
+  // Verificar rol del usuario
+  chechRoles(['admin', 'user']),
   validatorHandler(getAndDeleteSchema, 'params'),
   async (req, res, next) => {
     const { id } = req.params;
@@ -52,6 +57,8 @@ router.post(
   '/',
   // Protección de ruta a contra los no autenticados
   passport.authenticate('jwt', { session: false }),
+  // Verificar rol del usuario
+  chechRoles(['admin', 'user']),
   validatorHandler(CreateCropSchema, 'body'),
   async (req, res, next) => {
     const body = req.body;
@@ -72,6 +79,8 @@ router.delete(
   '/:id',
   // Protección de ruta a contra los no autenticados
   passport.authenticate('jwt', { session: false }),
+  // Verificar rol del usuario
+  chechRoles(['admin']),
   validatorHandler(getAndDeleteSchema, 'params'),
   async (req, res, next) => {
     const { id } = req.params;
@@ -91,6 +100,8 @@ router.put(
   '/:id',
   // Protección de ruta a contra los no autenticados
   passport.authenticate('jwt', { session: false }),
+  // Verificar rol del usuario
+  chechRoles(['admin']),
   validatorHandler(UpdateCropSchema, 'body'),
   async (req, res, next) => {
     const { id } = req.params;

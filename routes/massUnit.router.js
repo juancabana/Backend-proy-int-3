@@ -6,6 +6,7 @@ import {
   getAndDeleteMassUnitSchema,
 } from './../schemas/massUnit.schema.js';
 import passport from 'passport';
+import { chechRoles } from '../middlewares/auth.handler.js';
 
 const router = express.Router();
 const service = new mass_unitServices();
@@ -16,12 +17,12 @@ router.get(
   '/',
   // Protección de ruta a contra los no autenticados
   passport.authenticate('jwt', { session: false }),
+  // Verificar rol del usuario
+  chechRoles(['admin']),
   async (req, res, next) => {
     try {
       const units = await service.find();
-      res.json({
-        ...units,
-      });
+      res.json(units);
     } catch (err) {
       next(err);
     }
@@ -33,6 +34,8 @@ router.get(
   '/:id',
   // Protección de ruta a contra los no autenticados
   passport.authenticate('jwt', { session: false }),
+  // Verificar rol del usuario
+  chechRoles(['admin']),
   validatorHandler(getAndDeleteMassUnitSchema, 'params'),
   async (req, res, next) => {
     const { id } = req.params;
@@ -53,6 +56,8 @@ router.post(
   '/',
   // Protección de ruta a contra los no autenticados
   passport.authenticate('jwt', { session: false }),
+  // Verificar rol del usuario
+  chechRoles(['admin']),
   validatorHandler(createMassUnitSchema, 'body'),
   async (req, res, next) => {
     const body = req.body;
@@ -71,6 +76,8 @@ router.delete(
   '/:id',
   // Protección de ruta a contra los no autenticados
   passport.authenticate('jwt', { session: false }),
+  // Verificar rol del usuario
+  chechRoles(['admin']),
   validatorHandler(getAndDeleteMassUnitSchema, 'params'),
   async (req, res, next) => {
     const { id } = req.params;
