@@ -32,6 +32,10 @@ export const UserSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
+  recovery_token: {
+    allowNull: true,
+    type: DataTypes.STRING,
+  },
   image_user: {
     type: DataTypes.STRING,
     defaultValue: null,

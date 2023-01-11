@@ -22,6 +22,27 @@ class AuthService {
     return user;
   }
 
+  async sendRecovery(email) {
+    const user = await service.findByEmail(email);
+    if (!user) {
+      throw boom.unauthorized();
+    }
+    const payload = { sub: user.id };
+    // Generar jwt
+    const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '15min' });
+    const link = `http://myfrontend.com/recovery?token=${token}`;
+    await service.update(user.id, { recovery_token: token });
+    const mail = {
+      from: config.email, // sender address
+      to: `${user.email}`, // list of receivers
+      subject: 'Email para rcuperar contraseña', // Subject line
+      html: `<b>Ingresa a este link para recuperar la contraseña => ${link}</b>`, // html body
+    };
+
+    const rta = await this.sendMail(mail);
+    return rta;
+  }
+
   signToken(user) {
     const payload = {
       sub: user.id,
@@ -35,11 +56,25 @@ class AuthService {
     };
   }
 
-  async sendMail(email) {
-    const user = await service.findByEmail(email);
-    if (!user) {
+  async changePassword(token, newPassword) {
+    try {
+      const payload = jwt.verify(token, config.jwtSecret);
+      const user = await service.findOne(payload.sub);
+      console.log(payload)
+      if (user.recovery_token !== token) {
+        throw boom.unauthorized();
+      }
+
+      const hash = await bcrypt.hash(newPassword, 10);
+      // console.log(user.id, { recovery_token: null, password_user: hash })
+      await service.update(user.id, { recovery_token: null, password_user: hash });
+      return {message: 'Password changed'};
+    } catch (error) {
       throw boom.unauthorized();
     }
+  }
+
+  async sendMail(infoMail) {
     // create reusable transporter object using the default SMTP transport
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
@@ -52,15 +87,9 @@ class AuthService {
     });
 
     // send mail with defined transport object
-    await transporter.sendMail({
-      from: config.email, // sender address
-      to: `${user.email}`, // list of receivers
-      subject: 'Hello ✔', // Subject line
-      text: 'Hello world?', // plain text body
-      html: '<b>Hola, soy el backend de "cosco" enviándote un correo obviamente jajja</b>', // html body
-    });
+    await transporter.sendMail(infoMail);
 
-    return {message: 'Mail sent'}
+    return { message: 'Mail sent' };
   }
 }
 

@@ -38,15 +38,6 @@ class UserService {
   }
   async findOne(id) {
     const user = await sequelize.models.User.findByPk(id, {
-      attributes: [
-        'id',
-        'role',
-        'first_name_user',
-        'last_name_user',
-        'email',
-        'image_user',
-        'phone_number',
-      ],
       include: [
         {
           model: sequelize.models.Crop,
@@ -87,6 +78,12 @@ class UserService {
     });
     delete newUser.dataValues.password_user;
     return newUser;
+  }
+  async update(id, changes) {
+    const user = await this.findOne(id);
+    const rta = await user.update(changes);
+    console.log(rta)
+    return rta
   }
   async delete(id) {
     const user = await sequelize.models.User.findByPk(id);
