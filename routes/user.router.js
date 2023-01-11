@@ -1,11 +1,7 @@
 import expres from 'express';
 import UserServices from './../services/user.service.js';
 import validatorHandler from './../middlewares/validator.handler.js';
-import {
-  createUserSchema,
-  getAndDeleteUserSchema,
-  updateUserSchema,
-} from './../schemas/user.schema.js';
+import {createUserSchema,  getAndDeleteUserSchema} from './../schemas/user.schema.js';
 import passport from 'passport';
 import { chechRoles } from './../middlewares/auth.handler.js';
 

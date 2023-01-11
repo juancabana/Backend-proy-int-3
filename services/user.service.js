@@ -12,7 +12,7 @@ class UserService {
         'role',
         'first_name_user',
         'last_name_user',
-        'email_user',
+        'email',
         'image_user',
         'phone_number',
       ],
@@ -43,7 +43,7 @@ class UserService {
         'role',
         'first_name_user',
         'last_name_user',
-        'email_user',
+        'email',
         'image_user',
         'phone_number',
       ],
@@ -73,7 +73,7 @@ class UserService {
 
   async findByEmail(email) {
     const user = await sequelize.models.User.findOne({
-      where: { email_user: email },
+      where: { email: email },
     });
 
     return user;

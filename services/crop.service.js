@@ -17,7 +17,7 @@ class CropServices {
             'first_name_user',
             'last_name_user',
             'role',
-            'email_user',
+            'email',
             'image_user',
             'phone_number',
           ],
@@ -62,7 +62,7 @@ class CropServices {
         include: [{
             model: sequelize.models.User,
             as: 'owner',
-            attributes: [ 'id', 'first_name_user', 'last_name_user', 'role', 'email_user', 'image_user', 'phone_number' ],
+            attributes: [ 'id', 'first_name_user', 'last_name_user', 'role', 'email', 'image_user', 'phone_number' ],
           },
           {
             model: sequelize.models.Mass_unit_crop,
@@ -88,10 +88,10 @@ class CropServices {
     if (!crop) {
       throw boom.notFound('Crop not found');
     }
-    await post.destroy();
+    // await post.destroy();
     await crop.destroy();
     return {
-      message: 'EL usuario se ha eliminado correctamente',
+      message: 'La cosecha se ha eliminado correctamente',
     };
   }
   async update(id, data) {

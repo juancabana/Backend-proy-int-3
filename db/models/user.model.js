@@ -23,7 +23,7 @@ export const UserSchema = {
     defaultValue: null,
     type: DataTypes.STRING,
   },
-  email_user: {
+  email: {
     allowNull: false,
     unique: true,
     type: DataTypes.STRING,
