@@ -55,6 +55,6 @@ export const UpdateCropSchema = joi.object({
   price_crop: price.required(),
 });
 
-export const getAndDeleteSchema = joi.required({
+export const getAndDeleteSchema = joi.object({
   id: id.required(),
 });

@@ -1,11 +1,11 @@
 import boom from '@hapi/boom';
 
 export const checkAPIKey = (req, res, next) => {
-  const apiKey = req.headers['api'];
+  const apiKey = req.headers['x-api-key'];
   if (apiKey === '123') {
     next();
   } else {
-    next(boom.unauthorized());
+    next(boom.unauthorized('Invalid API KEY'));
   }
 };
 

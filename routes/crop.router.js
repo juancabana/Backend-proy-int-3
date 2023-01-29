@@ -41,8 +41,8 @@ router.get(
   chechRoles(['admin', 'user']),
   validatorHandler(getAndDeleteSchema, 'params'),
   async (req, res, next) => {
-    const { id } = req.params;
     try {
+      const { id } = req.params;
       const crop = await service.findOne(id);
       res.json(crop);
     } catch (err) {
